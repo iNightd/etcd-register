@@ -97,3 +97,20 @@ func (s *Service) unregister(ctxs ...context.Context) error {
 	}
 	return err
 }
+
+func etcdCheck(endpoints []string) {
+	cli := &http.Client{
+		Timeout: 3 * time.Second,
+	}
+	for _, point := range endpoints {
+		resp, err := cli.Get(fmt.Sprintf("%s/version", point))
+		if err != nil {
+			log.Printf("etcd test err: %s", err)
+			break
+		}
+		defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+		log.Printf("etcd test succed %s %s", point, string(body[:]))
+	}
+}
+
