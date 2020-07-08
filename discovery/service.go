@@ -1,10 +1,13 @@
 package discovery
 
 import (
-	"go.etcd.io/etcd/client"
-	"time"
 	"context"
+	"fmt"
+	"go.etcd.io/etcd/client"
+	"io/ioutil"
 	"log"
+	"net/http"
+	"time"
 )
 
 type Options struct {
@@ -113,4 +116,3 @@ func etcdCheck(endpoints []string) {
 		log.Printf("etcd test succed %s %s", point, string(body[:]))
 	}
 }
-
